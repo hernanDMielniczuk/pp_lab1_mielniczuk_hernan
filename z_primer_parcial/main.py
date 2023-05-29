@@ -326,25 +326,7 @@ while True:
             lista_mayor_porcentaje = mayor_al_dato_ingresado_posicion(lista_dream_team,"porcentaje_tiros_de_campo")##FALTA
             print(listar_jugadores_posicion(lista_mayor_porcentaje))
         case "23":
-            ###
-            lista_ppp = ordenamiento(lista_dream_team,"puntos_totales")
-            lista_rpa = ordenamiento(lista_dream_team,"rebotes_totales")
-            lista_apa = ordenamiento(lista_dream_team,"asistencias_totales")
-            lista_robos = ordenamiento(lista_dream_team,"robos_totales")
-            lista_ppp_ordenada = []
-            print("lista puntos")
-            for jugador in range(len(lista_ppp)):
-                lista_ppp_ordenada.append("{0},{1}".format(lista_ppp[jugador]["nombre"],jugador+1))
-            print("lista reb")
-            for jugador in lista_rpa:
-                print(jugador["nombre"])
-            print("lista asis")
-            for jugador in lista_apa:
-                print(jugador["nombre"])
-            print("lista robos")
-            for jugador in lista_robos:
-                print(jugador["nombre"])            
-  
+            pass
         case "0":
             break
         case _:
@@ -352,7 +334,4 @@ while True:
 
 """
 Falta el punto 23
-Falta documentar las funciones (escribir que reciben, que hacen y que devuelven)
-Falta cambiar el case 24 > por el case 0
-
 """
