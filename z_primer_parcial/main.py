@@ -123,7 +123,7 @@ def ordenamiento(lista:list, dato:str):
 
     return lista_ordenada
 
-def calcular_mostrar_mayor_dato(lista:list, dato:str):
+def calcular_mostrar_mayor_dato_mensaje(lista:list, dato:str):
     """
     recibe dos parametros una lista y un string que representa el dato a comparar
     comprueba que la liste no este vacia y calcula el jugador que tenga la mayor cantidad del dato pedido, tambien comprueba si alguien tiene la misma cantidad del mayor dato
@@ -249,6 +249,105 @@ def pertenece_salon_fama(lista:list):
     return mensaje
 
 
+#####24
+def listar_posicion(lista:list):
+    """
+    recibe por parametro una lista
+    comprueba que la lista tenga al menos un elemento y genera un mensaje con el nombre y la posicion
+    devuelve una lista con los mensajes generados que contienen el nombre y posicion de cada jugador
+    """
+    lista_posicion = []
+    if len(lista) > 0:
+        for jugador in lista:
+            jugador_listado = "{0}".format(jugador["posicion"])
+            lista_posicion.append(jugador_listado)
+    else:
+        print("No hay jugadores en esa lista")
+    return lista_posicion
+
+def contador_posicion(lista:list):
+    contador_base = 0
+    contador_escolta = 0
+    contador_alero = 0
+    contador_ala_pivot = 0
+    contador_pivot = 0
+    for posicion in lista:
+        dato = posicion.lower()
+        match(dato):
+            case "base":
+                contador_base += 1
+            case "escolta":
+                contador_escolta += 1
+            case "alero":
+                contador_alero += 1
+            case "ala-pivot":
+                contador_ala_pivot += 1
+            case "pivot":
+                contador_pivot += 1
+    
+    mensaje = "Base:{0}\nEscolta:{1}\nAlero:{2}\nAla-pivot:{3}\nPivot:{4}".format(contador_base,contador_escolta,contador_alero,contador_ala_pivot,contador_pivot)
+    return mensaje
+###26
+def mostrar_mayor_todas_estadisticas(lista:list):
+    calcular_mostrar_mayor_dato_mensaje(lista,"temporadas")
+    calcular_mostrar_mayor_dato_mensaje(lista,"puntos_totales")
+    calcular_mostrar_mayor_dato_mensaje(lista,"promedio_puntos_por_partido")
+    calcular_mostrar_mayor_dato_mensaje(lista,"rebotes_totales")
+    calcular_mostrar_mayor_dato_mensaje(lista,"promedio_rebotes_por_partido")
+    calcular_mostrar_mayor_dato_mensaje(lista,"asistencias_totales")
+    calcular_mostrar_mayor_dato_mensaje(lista,"promedio_asistencias_por_partido")
+    calcular_mostrar_mayor_dato_mensaje(lista,"robos_totales")
+    calcular_mostrar_mayor_dato_mensaje(lista,"bloqueos_totales")
+    calcular_mostrar_mayor_dato_mensaje(lista,"porcentaje_tiros_de_campo")
+    calcular_mostrar_mayor_dato_mensaje(lista,"porcentaje_tiros_libres")
+    calcular_mostrar_mayor_dato_mensaje(lista,"porcentaje_tiros_triples")
+
+###27
+def calcular_mostrar_mayor_dato_nombre(lista:list, dato:str):
+    if len(lista) > 1:
+        indice_max = 0
+        maximos = 0
+        for jugador in range(len(lista)):
+            if indice_max == 0 or lista[jugador]["estadisticas"][dato] > maximos:
+                maximos = lista[jugador]["estadisticas"][dato]
+                indice_max = jugador
+    else:
+        return lista
+
+    maximo_dato = "{0}".format(lista[indice_max]["nombre"])
+
+
+    return maximo_dato
+
+def determinar_mejores_estadisticas(lista):
+    lista_cuenta = []
+    dict_contador = {}
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"temporadas"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"puntos_totales"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"promedio_puntos_por_partido"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"rebotes_totales"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"promedio_rebotes_por_partido"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"asistencias_totales"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"promedio_asistencias_por_partido"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"robos_totales"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"bloqueos_totales"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"porcentaje_tiros_de_campo"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"porcentaje_tiros_libres"))
+    lista_cuenta.append(calcular_mostrar_mayor_dato_nombre(lista,"porcentaje_tiros_triples"))
+
+    for nombre in lista_cuenta:
+        if nombre in dict_contador:
+            dict_contador[nombre] += 1
+        else:
+            dict_contador[nombre] = 1
+    maximo = 0
+    for jugador in dict_contador:
+        if int(dict_contador[jugador]) > maximo:
+            maximo = dict_contador[jugador]
+            nombre = jugador
+
+    
+    return print("El jugador que lidera el mayor numero de estadisticas es: {0}".format(nombre))
 
 
 lista_dream_team = abrir_json("z_primer_parcial/dt.json")
@@ -263,7 +362,7 @@ while True:
         case "2":
             jugador_con_estadisticas = estadisticas_completas_por_jugador(lista_dream_team)
             contador_caso_2 =+ 1
-
+            print(jugador_con_estadisticas)
         case "3":
             if contador_caso_2 > 0:
                 dict_est = jugador_con_estadisticas[1]
@@ -293,11 +392,11 @@ while True:
         case "6":
             pertenece_salon_fama(lista_dream_team)
         case "7":
-            calcular_mostrar_mayor_dato(lista_dream_team,"rebotes_totales")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"rebotes_totales")
         case "8":
-            calcular_mostrar_mayor_dato(lista_dream_team,"porcentaje_tiros_de_campo")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"porcentaje_tiros_de_campo")
         case "9":
-            calcular_mostrar_mayor_dato(lista_dream_team,"asistencias_totales")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"asistencias_totales")
         case "10":
             print(mayor_al_dato_ingresado_nombres(lista_dream_team,"promedio_puntos_por_partido"))
         case "11":
@@ -305,9 +404,9 @@ while True:
         case "12":
             print(mayor_al_dato_ingresado_nombres(lista_dream_team,"promedio_asistencias_por_partido"))
         case "13":
-            calcular_mostrar_mayor_dato(lista_dream_team,"robos_totales")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"robos_totales")
         case "14":
-            calcular_mostrar_mayor_dato(lista_dream_team,"bloqueos_totales")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"bloqueos_totales")
         case "15":
             print(mayor_al_dato_ingresado_nombres(lista_dream_team,"porcentaje_tiros_libres"))
         case "16":
@@ -321,17 +420,22 @@ while True:
         case "18":
             print(mayor_al_dato_ingresado_nombres(lista_dream_team,"porcentaje_tiros_triples"))
         case "19":
-            calcular_mostrar_mayor_dato(lista_dream_team,"temporadas")
+            calcular_mostrar_mayor_dato_mensaje(lista_dream_team,"temporadas")
         case "20":
             lista_mayor_porcentaje = mayor_al_dato_ingresado_posicion(lista_dream_team,"porcentaje_tiros_de_campo")##FALTA
             print(listar_jugadores_posicion(lista_mayor_porcentaje))
         case "23":
             pass
+        case "24":
+            lista_posicion = listar_posicion(lista_dream_team)
+            print(contador_posicion(lista_posicion))
+        case "25":
+            pass
+        case "26":
+            mostrar_mayor_todas_estadisticas(lista_dream_team)
+        case "27":
+            print(determinar_mejores_estadisticas(lista_dream_team))
         case "0":
             break
         case _:
             print("Seleccion invalida")
-
-"""
-Falta el punto 23
-"""
